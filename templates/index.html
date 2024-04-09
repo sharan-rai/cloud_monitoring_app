@@ -4,19 +4,47 @@
     <title>System Monitoring</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
-        .plotly-graph-div {
-            margin: auto;
-            width: 50%;
-            background-color: rgba(151, 128, 128, 0.688);
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
             padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h1 {
+            text-align: center;
+            color: #333;
+        }
+        .plot-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .plotly-graph-div {
+            flex: 1 1 calc(45% - 20px);
+            background-color: rgba(151, 128, 128, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>System Monitoring</h1>
-        <div id="cpu-gauge"></div>
-        <div id="mem-gauge"></div>
+        <div class="plot-container">
+            <div id="cpu-gauge" class="plotly-graph-div"></div>
+            <div id="mem-gauge" class="plotly-graph-div"></div>
+        </div>
         {% if message %}
         <div class="alert alert-danger">{{ message }}</div>
         {% endif %}
@@ -33,9 +61,9 @@
                 borderwidth: 2,
                 bordercolor: "#ccc",
                 steps: [
-                    { range: [0, 50], color: "#d9f0a3" },
-                    { range: [50, 85], color: "#ffeb84" },
-                    { range: [85, 100], color: "#ff5f5f" }
+                    { range: [0, 50], color: "#5beb34" },
+                    { range: [50, 85], color: "#ebeb34" },
+                    { range: [85, 100], color: "#eb3434" }
                 ],
                 threshold: {
                     line: { color: "red", width: 4 },
@@ -56,9 +84,9 @@
                 borderwidth: 2,
                 bordercolor: "#ccc",
                 steps: [
-                    { range: [0, 50], color: "#d9f0a3" },
-                    { range: [50, 85], color: "#ffeb84" },
-                    { range: [85, 100], color: "#ff5f5f" }
+                    { range: [0, 50], color: "#5beb34" },
+                    { range: [50, 85], color: "#ebeb34" },
+                    { range: [85, 100], color: "#eb3434" }
                 ],
                 threshold: {
                     line: { color: "red", width: 4 },
@@ -68,8 +96,8 @@
             }
         };
         
-        var cpuGaugeLayout = { title: "CPU Utilization" };
-        var memGaugeLayout = { title: "Memory Utilization" };
+        var cpuGaugeLayout = { title: "CPU Utilization", margin: { t: 40, b: 20 } };
+        var memGaugeLayout = { title: "Memory Utilization", margin: { t: 40, b: 20 } };
         
         Plotly.newPlot('cpu-gauge', [cpuGauge], cpuGaugeLayout);
         Plotly.newPlot('mem-gauge', [memGauge], memGaugeLayout);
